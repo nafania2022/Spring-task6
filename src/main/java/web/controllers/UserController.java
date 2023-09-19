@@ -11,6 +11,7 @@ import java.util.List;
 
 
 @Controller
+@RequestMapping(value = "/")
 public class UserController {
 
     @Autowired
@@ -23,25 +24,26 @@ public class UserController {
         return "index";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    @GetMapping(value = "/add")
     public String addUserForm(Model model){
         model.addAttribute("user", new User());
         return "add";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "text/html; charset=utf-8")
+    @PostMapping(value = "/add")
     public String addUser(@ModelAttribute("user") User user){
         userService.add(user);
         return "redirect:/";
     }
 
-    @RequestMapping( value = "/update/{id}", method = RequestMethod.GET)
+    @GetMapping( value = "/update/{id}")
     public String updateUserShowForm(@PathVariable("id") Long id, Model model) {
         User user = userService.getUser(id);
         model.addAttribute("user", user);
         return "update";
 
-    }@RequestMapping( value = "/update", method = RequestMethod.POST, produces = "text/html; charset=utf-8")
+    }
+    @PostMapping( value = "/update")
     public String updateUser(@ModelAttribute("user") User user) {
         System.out.println(user);
         userService.update(user);
